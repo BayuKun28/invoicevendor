@@ -1,10 +1,10 @@
 <?php
 class Invoice_model extends CI_Model{
-	
-	
+
+
 	var $tableinvoice = 'invoice';
-	var $column_search_invoice = array('invoice.id','invoice.kwitansi','invoice.nominal','invoice.tgl_pembayaran','invoice.status','invoice.id_vendor'); 
-	
+	var $column_search_invoice = array('invoice.id','invoice.kwitansi','invoice.nominal','invoice.tgl_pembayaran','invoice.status','invoice.id_vendor');
+
 
 	public function __construct()
 	{
@@ -19,15 +19,15 @@ class Invoice_model extends CI_Model{
 		{
 			$this->db->like('id_vendor', $this->input->post('id_vendor'));
 		}
-
-		$this->db->from($this->tableinvoice);
+		$this->db->select('*,invoice.id as kode');
+		$this->db->from('invoice');
 		$i = 0;
-		foreach ($this->column_search_invoice as $item) 
+		foreach ($this->column_search_invoice as $item)
 		{
-			if($_POST['search']['value']) 
+			if($_POST['search']['value'])
 			{
-				if($i===0) 
-				{	
+				if($i===0)
+				{
 					$this->db->group_start();
 					$this->db->like($item, $_POST['search']['value']);
 				}
@@ -36,26 +36,26 @@ class Invoice_model extends CI_Model{
 					$this->db->or_like($item, $_POST['search']['value']);
 				}
 
-				if(count($this->column_search_invoice) - 1 == $i) 
-					$this->db->group_end(); 
+				if(count($this->column_search_invoice) - 1 == $i)
+					$this->db->group_end();
 			}
 			$i++;
 		}
-		
-		
+
+
 	}
 	function get_datatables(){
-        
-        $this->db->join( 'vendors', 'vendors.id = invoice.id_vendor' , 'left' );
+
+		$this->db->join( 'vendors', 'invoice.id_vendor = vendors.id' , 'left' );
 		$this->db->order_by('invoice.id', 'desc');
-		
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
 		$this->db->limit($_POST['length'], $_POST['start']);
+		// $this->db->last_query();
 		$query = $this->db->get();
 		return $query->result();
 	}
-	
+
 	public function count_filtered()
 	{
 		$this->_get_datatables_query();
@@ -106,13 +106,13 @@ class Invoice_model extends CI_Model{
     {
         return $this->db->delete('invoice', array('id' => $id));
     }
-	
+
 	function get_all_bukti(){
-	
+
 		$this->db->select('invoice.*');
 		$this->db->from('invoice');
 		$query = $this->db->get();
 		return $query;
 	}
-	
+
 }

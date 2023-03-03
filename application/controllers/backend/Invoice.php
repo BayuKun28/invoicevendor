@@ -40,17 +40,17 @@ class Invoice extends CI_Controller{
 			$no++;
 			$row = array();
 			$row[] = $no;
-			
+
 			$row[] = $d->kwitansi;
 			$row[] = "Rp " . number_format($d->nominal, 0, "", ",");
 			$row[] = format_indo(date($d->tgl_pembayaran));
 			$row[] = $d->status;
-			$row[] = '<div class="btn-group mb-1"><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opsi</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton7"><a class="dropdown-item item_edit" href="javascript:void()" title="Edit" onclick="edit_invoice('."'".$d->id."'".')"><i class="bi bi-pen-fill"></i> Edit</a>
-			<a class="dropdown-item delete_record" href="javascript:void()" title="Hapus" id="del" value="'.$d->id.'"><i class="bi bi-trash"></i> Hapus</a>
+			$row[] = '<div class="btn-group mb-1"><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opsi</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton7"><a class="dropdown-item item_edit" href="javascript:void()" title="Edit" onclick="edit_invoice('."'".$d->kode."'".')"><i class="bi bi-pen-fill"></i> Edit</a>
+			<a class="dropdown-item delete_record" href="javascript:void()" title="Hapus" id="del" value="'.$d->kode.'"><i class="bi bi-trash"></i> Hapus</a>
 				  </div></div></div>';
 			$data[] = $row;
 		}
-		
+
 		$output = array(
 						"draw" => $_POST['draw'],
 						"recordsTotal" => $this->invoice_model->count_all(),
@@ -79,7 +79,7 @@ class Invoice extends CI_Controller{
 			"status" => $this->input->post('kwitansi',TRUE)
 		);
 		$insert = $this->invoice_model->insert_invoice($arraysql);
-		
+
 		if($insert){
 			// INSERT LOG
 
@@ -94,10 +94,10 @@ class Invoice extends CI_Controller{
 		}else{
 			echo json_encode(array("status" => FALSE));
 		}
-		
+
     }
 
-	
+
     function edit() {
     	$pengeluaranid=$this->input->post('id',TRUE);
 		$this->_validate_edit();
@@ -142,19 +142,19 @@ class Invoice extends CI_Controller{
 							}
 
 							$ajax_data['imgbukti'] = $gambar;
-							
-						
-				        }      
+
+
+				        }
 				    }
 				$id = $this->input->post('id',TRUE);
 	    		$biaya = $this->input->post('biaya',TRUE);
 				$ket = $this->input->post('ket',TRUE);
 				$biayashow = "Rp " . number_format($biaya, 0, "", ",");
-	    		
+
 				$post = $this->invoice_model->single_entry($id);
 				$biaya_lama = $post->biaya_pengeluaran;
 				$biaya_lama_show = "Rp " . number_format($biaya_lama, 0, "", ",");
-		
+
 				// INSERT LOG
 				$nama_users = $this->session->userdata('name');
 				$b = '<b>'.$nama_users.'</b> Mengubah Pengeluaran Sebesar <b>'.$biaya_lama_show.' Menjadi '.$biayashow.'</b> Untuk Keperluan '.$ket;
@@ -166,32 +166,32 @@ class Invoice extends CI_Controller{
 
 
 				$users = $this->session->userdata('id');
-				
+
 				$ajax_data['ket_pengeluaran'] = $this->input->post('ket',TRUE);
 				$ajax_data['biaya_pengeluaran'] = $this->input->post('biaya',TRUE);
 				$ajax_data['id_user_pengeluaran'] = $users;
 
 				if ($this->invoice_model->update_entry($pengeluaranid, $ajax_data)) {
-					
+
 					echo json_encode(array("status" => TRUE));
 				} else {
 					echo json_encode(array("status" => FALSE));
 				}
-		
+
     }
     public function delete() {
     	if ($this->input->is_ajax_request()) {
 
 			$idkon = $this->input->post('idkon');
-			
-			
+
+
 				if ($this->invoice_model->delete_entry($dikon)) {
-					
+
 					$data = array('res' => "success", 'message' => "Proses berhasil dilakukan");
 				} else {
 					$data = array('res' => "error", 'message' => "Proses gagal dilakukan");
 				}
-			
+
 			echo json_encode($data);
 		} else {
 			echo "No direct script access allowed";
@@ -287,7 +287,7 @@ class Invoice extends CI_Controller{
 			$data['error_string'][] = 'Form Biaya harus berisi';
 			$data['status'] = FALSE;
 		}
-		
+
 		if (($_FILES["picture_1"]["size"] > 5000000)) {
 			$data['inputerror'][] = 'picture_1';
 			$data['error_string'][] = 'Image size maksimal 5MB';
@@ -304,7 +304,7 @@ class Invoice extends CI_Controller{
 			exit();
 		}
 	}
-	
+
 
 
 }

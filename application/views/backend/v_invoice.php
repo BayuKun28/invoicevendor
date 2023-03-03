@@ -9,8 +9,8 @@
                 <div class="card">
             <div class="card-body">
                 <!-- FILTER -->
-                        <?php if($this->session->userdata('access')=='1'):?> 
-                        <p class="text-subtitle text-muted">Filter Data</p>    
+                        <?php if($this->session->userdata('access')=='1'):?>
+                        <p class="text-subtitle text-muted">Filter Data</p>
                         <form id="form-filter">
                             <div class="row">
                             <div class="col-12 col-md-4">
@@ -31,7 +31,7 @@
                         </form>
                     <hr>
                         <?php else:?>
-           
+
                         <?php endif;?>
 <!-- FILTER -->
                 <a class="btn icon btn-sm btn-success float-end" onclick="add_invoice()"><i class="bi bi-plus"></i></a>&nbsp;&nbsp;
@@ -65,10 +65,10 @@
     </div>
 <!------- TOASTIFY JS --------->
     <?php $this->load->view("backend/_partials/toastify.php") ?>
-    
+
 <!------- TOASTIFY JS --------->
 <script type="application/javascript">
-var save_method; 
+var save_method;
 var table;
 var csfrData = {};
 csfrData['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo
@@ -79,14 +79,14 @@ data: csfrData
 $(document).ready(function() {
 
     //datatables
-    table = $('#mytable').DataTable({ 
+    table = $('#mytable').DataTable({
 
         "processing": true,
         "serverSide": true,
-        "order": [], 
+        "order": [],
 
         "ajax": {
-            "url": "<?php echo site_url('backend/Invoice/get_ajax_list')?>",
+            "url": "<?php echo site_url('backend/invoice/get_ajax_list')?>",
             "type": "POST",
             "data": function ( data ) {
                 data.id_vendor = $('#id_vendor').val();
@@ -95,42 +95,42 @@ $(document).ready(function() {
 
 
         "columnDefs": [
-        { 
-            "targets": [ 0,1,2,3,4 ], 
-            "orderable": false, 
+        {
+            "targets": [ 0,1,2,3,4 ],
+            "orderable": false,
         },
         ],
 
     });
-    
-  
+
+
     $("#nama").change(function(){
         $(this).parent().parent().removeClass('has-error');
         $(this).next().empty();
     });
-    $('#btn-filter').click(function(){ 
-        table.ajax.reload();  
+    $('#btn-filter').click(function(){
+        table.ajax.reload();
     });
-    $('#btn-reset').click(function(){ 
+    $('#btn-reset').click(function(){
         $('#form-filter')[0].reset();
         $("#id_vendor").select2("destroy");
         $("#id_vendor").select2({
                 cache: false,
                 theme: "bootstrap-5",
         });
-        table.ajax.reload(); 
+        table.ajax.reload();
     });
 
             $("#id_vendor").select2({
                 cache: false,
                 theme: "bootstrap-5",
-            }); 
+            });
 
             $("#vendor").select2({
                 cache: false,
                 theme: "bootstrap-5",
                 dropdownParent: $('#modal_form_invoice')
-            }); 
+            });
 
 });
 
@@ -139,26 +139,26 @@ $(document).ready(function() {
 function add_invoice()
 {
     save_method = 'add';
-    $('#forminvoice')[0].reset(); 
+    $('#forminvoice')[0].reset();
     $('.show_edit').empty(); // clear error class
-    $('.form-group').removeClass('has-error'); 
-    $('.help-block').empty(); 
+    $('.form-group').removeClass('has-error');
+    $('.help-block').empty();
     $('#modal_form_invoice').modal('show');
     $('.modal-title').text('Tambah Invoice');
-   
+
 }
-            
+
 function edit_invoice(id_invoice)
 {
     save_method = 'update';
     $('#forminvoice')[0].reset();
-    $('.form-group').removeClass('has-error'); 
-    $('.help-block').empty(); 
-    $('#modal_form_invoice').modal('show'); 
-    $('.modal-title').text('Edit Invoice'); 
+    $('.form-group').removeClass('has-error');
+    $('.help-block').empty();
+    $('#modal_form_invoice').modal('show');
+    $('.modal-title').text('Edit Invoice');
     var base_url = '<?php echo base_url(); ?>';
     $.ajax({
-        url : "<?php echo site_url('backend/Invoice/ajax_edit/')?>/" + id_invoice,
+        url : "<?php echo site_url('backend/invoice/ajax_edit/')?>/" + id_invoice,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -168,7 +168,7 @@ function edit_invoice(id_invoice)
                 $('[name="nominal"]').val(data.nominal);
                 $('[name="tgl_pembayaran"]').val(data.tgl_pembayaran);
                 $('[name="status"]').val(data.status);
-                $('#modal_form_invoice').modal('hide'); 
+                $('#modal_form_invoice').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
@@ -179,7 +179,7 @@ function edit_invoice(id_invoice)
 
 function reload_table()
 {
-    table.ajax.reload(null,false); 
+    table.ajax.reload(null,false);
 }
 
 function addinvoice()
@@ -191,7 +191,7 @@ function addinvoice()
     var status = $("#status").val();
     var vendor = $("#vendor").val();
 
-    var fd = new FormData();    
+    var fd = new FormData();
     fd.append("id", id);
     fd.append("vendor", vendor);
     fd.append("kwitansi", kwitansi);
@@ -199,8 +199,8 @@ function addinvoice()
     fd.append("tgl_pembayaran", tgl_pembayaran);
     fd.append("status", status);
     fd.append("<?php echo $this->security->get_csrf_token_name(); ?>", '<?php echo $this->security->get_csrf_hash(); ?>');
-    $('#btnSave').text('saving...'); 
-    $('#btnSave').attr('disabled',true); 
+    $('#btnSave').text('saving...');
+    $('#btnSave').attr('disabled',true);
     var url;
 
     if(save_method == 'add') {
@@ -220,7 +220,7 @@ function addinvoice()
         success: function(data)
         {
 
-            if(data.status) 
+            if(data.status)
             {
                 toastify_success();
                 $('#modal_form_invoice').modal('hide');
@@ -228,23 +228,23 @@ function addinvoice()
             }
             else
             {
-                for (var i = 0; i < data.inputerror.length; i++) 
+                for (var i = 0; i < data.inputerror.length; i++)
                 {
-                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); 
+                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error');
                     $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]);
-                   
+
                 }
             }
-            $('#btnSave').text('Save'); 
-            $('#btnSave').attr('disabled',false); 
+            $('#btnSave').text('Save');
+            $('#btnSave').attr('disabled',false);
 
 
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
             alert('Error adding / update data');
-            $('#btnSave').text('Save'); 
-            $('#btnSave').attr('disabled',false); 
+            $('#btnSave').text('Save');
+            $('#btnSave').attr('disabled',false);
 
         }
     });
@@ -278,7 +278,7 @@ $(document).on("click", "#del", function(e) {
                                 "Data berhasil dihapus.",
                                 "success"
                             );
-                           
+
                             reload_table();
                         }
                     },
