@@ -134,14 +134,9 @@ data: csfrData
                             levels = data[i].user_level;
                             if (levels == 1) {
                                 ket_levels = 'Admin';
-                            } else if (levels == 2) {
-                                ket_levels = 'Gudang';
-                            } else if (levels == 3) {
-                                ket_levels = 'Kasir Lapangan';
                             } else {
-                                ket_levels = 'Unauthorized';
-                            }
-                            
+                                ket_levels = 'Vendor';
+                            } 
                             
                             display_ket = '<table class="table table-borderless float-start w-75">'+
                             '<tr>'+
