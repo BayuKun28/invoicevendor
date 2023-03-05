@@ -15,9 +15,9 @@ class Invoice_model extends CI_Model{
 	private function _get_datatables_query()
 	{
 		//add custom filter here
-		if($this->input->post('kwitansi'))
+		if($this->input->post('id_vendor'))
 		{
-			$this->db->like('kwitansi', $this->input->post('kwitansi'));
+			$this->db->like('id_vendor', $this->input->post('id_vendor'));
 		}
 		$this->db->select('*,invoice.id as kode');
 		$this->db->from('invoice');
