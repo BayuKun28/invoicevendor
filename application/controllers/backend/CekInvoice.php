@@ -1,13 +1,9 @@
 <?php
-class Invoice extends CI_Controller{
+class CekInvoice extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		error_reporting(0);
-		if($this->session->userdata('access') != "3" && $this->session->userdata('access') != "1"){
-			$url=base_url('/');
-            redirect($url);
-		};
-		$this->load->model('backend/Invoice_model','invoice_model');
+		$this->load->model('backend/CekInvoice_model','cekinvoice_model');
 		$this->load->model('backend/Stock_model','stock_model');
 		$this->load->model('backend/Absensi_model','absensi_model');
 		$this->load->model('Site_model','site_model');
@@ -24,37 +20,32 @@ class Invoice extends CI_Controller{
         $x['site_title'] = $site['site_title'];
         $x['site_favicon'] = $site['site_favicon'];
         $x['images'] = $site['images'];
-		$x['title'] = 'Invoice Vendors';
-		$x['vendors'] = $this->invoice_model->get_all_vendors();
+		$x['title'] = 'Cek Invoice Vendors';
 		$this->load->view('backend/menu',$x);
-		$this->load->view('backend/modal/invoice_modal');
 		$this->load->view('backend/_partials/templatejs');
-		$this->load->view('backend/v_invoice',$x);
+		$this->load->view('backend/v_CekInvoice',$x);
 	}
 	public function get_ajax_list()
 	{
-		$list = $this->invoice_model->get_datatables();
+		$list = $this->cekinvoice_model->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $d) {
 			$no++;
 			$row = array();
 			$row[] = $no;
-
+            $row[] = $d->nama;
 			$row[] = $d->kwitansi;
 			$row[] = "Rp " . number_format($d->nominal, 0, "", ",");
 			$row[] = format_indo(date($d->tgl_pembayaran));
 			$row[] = $d->status;
-			$row[] = '<div class="btn-group mb-1"><div class="dropdown"><button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opsi</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton7"><a class="dropdown-item item_edit" href="javascript:void()" title="Edit" onclick="edit_invoice('."'".$d->kode."'".')"><i class="bi bi-pen-fill"></i> Edit</a>
-			<a class="dropdown-item delete_record" href="javascript:void()" title="Hapus" id="del" value="'.$d->kode.'"><i class="bi bi-trash"></i> Hapus</a>
-				  </div></div></div>';
 			$data[] = $row;
 		}
 
 		$output = array(
 						"draw" => $_POST['draw'],
-						"recordsTotal" => $this->invoice_model->count_all(),
-						"recordsFiltered" => $this->invoice_model->count_filtered(),
+						"recordsTotal" => $this->cekinvoice_model->count_all(),
+						"recordsFiltered" => $this->cekinvoice_model->count_filtered(),
 						"data" => $data,
 				);
 		//output to json format
@@ -62,7 +53,7 @@ class Invoice extends CI_Controller{
 	}
 	public function ajax_edit($id_invoice)
 	{
-		$data = $this->invoice_model->get_by_id($id_invoice);
+		$data = $this->cekinvoice_model->get_by_id($id_invoice);
 		echo json_encode($data);
 	}
 
@@ -78,7 +69,7 @@ class Invoice extends CI_Controller{
 			"tgl_pembayaran" => $this->input->post('tgl_pembayaran',TRUE),
 			"status" => $this->input->post('kwitansi',TRUE)
 		);
-		$insert = $this->invoice_model->insert_invoice($arraysql);
+		$insert = $this->cekinvoice_model->insert_invoice($arraysql);
 
 		if($insert){
 			// INSERT LOG
@@ -106,7 +97,7 @@ class Invoice extends CI_Controller{
 	    		$nominal = $this->input->post('nominal',TRUE);
 				$nominalshow = "Rp " . number_format($nominal, 0, "", ",");
 
-				$post = $this->invoice_model->single_entry($id);
+				$post = $this->cekinvoice_model->single_entry($id);
 				$nominal_lama = $post->nominal;
 				$nominal_lama_show = "Rp " . number_format($nominal_lama, 0, "", ",");
 
@@ -128,7 +119,7 @@ class Invoice extends CI_Controller{
 				$ajax_data['status'] = $this->input->post('status',TRUE);
 				$ajax_data['tgl_pembayaran'] = $this->input->post('tgl_pembayaran',TRUE);
 
-				if ($this->invoice_model->update_entry($invoiceid, $ajax_data)) {
+				if ($this->cekinvoice_model->update_entry($invoiceid, $ajax_data)) {
 
 					echo json_encode(array("status" => TRUE));
 				} else {
@@ -142,7 +133,7 @@ class Invoice extends CI_Controller{
 			$idkon = $this->input->post('idkon');
 
 
-				if ($this->invoice_model->delete_entry($idkon)) {
+				if ($this->cekinvoice_model->delete_entry($idkon)) {
 
 					$data = array('res' => "success", 'message' => "Proses berhasil dilakukan");
 				} else {

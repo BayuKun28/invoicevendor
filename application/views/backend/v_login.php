@@ -23,10 +23,7 @@
 
         <div id="auth-left">
             
-            <h1 class="auth-title">Log in</h1>
-            <p class="auth-subtitle mb-5 display-4">Admin <?php echo $site_title; ?></p>
-
-            
+            <h1 class="auth-title">Log in</h1>            
             <?php 
                 echo form_open('admin/auth');
 
@@ -76,11 +73,6 @@
                 <?php
                 echo form_close();
                 ?>
-
-            <div class="text-center mt-5 text-lg fs-4">
-                <p><a class='font-bold  ' href="<?php echo site_url('login_user');?>">Login User</a>.</p>
-            </div>
-
         </div>
     </div>
     <div class="col-lg-7 d-none d-lg-block">

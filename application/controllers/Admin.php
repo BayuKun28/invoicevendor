@@ -1,10 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-/**
-* Description of Controller
-*
-* @author https://aethershin.com
-*/
+
 class Admin extends CI_Controller{
 	function __construct(){
 		parent::__construct();
@@ -23,7 +19,7 @@ class Admin extends CI_Controller{
         $data['form_password'] = form_password('','','name="password_cgtv_122021" id="inputPassword1" class="form-control form-control-xl" placeholder="Password"');
         $site = $this->site_model->get_site_data()->row_array();
         $data['site_title'] = $site['site_title'];
-        $data['title'] = 'Login Admin Stok Warehouse';
+        $data['title'] = 'Login Admin Vendors';
         $data['site_icon'] = $site['site_favicon'];
 		$this->load->view('backend/v_login',$data);
         
@@ -65,7 +61,19 @@ class Admin extends CI_Controller{
     					
                         $this->session->set_userdata('user_photo',$user_photo);
                     	redirect('backend/dashboard');
-                   
+                    }else if($x['user_level']=='2'){ //Administrator
+                    	$this->session->set_userdata('access','2');
+                    	$id=$x['user_id'];
+                    	$name=$x['user_name'];
+                        $level=$x['user_level'];
+    					
+                        $user_photo=$x['user_photo'];
+                    	$this->session->set_userdata('id',$id);
+                    	$this->session->set_userdata('name',$name);
+                        $this->session->set_userdata('level',$level);
+    					
+                        $this->session->set_userdata('user_photo',$user_photo);
+                    	redirect('backend/dashboard');
                     
                  	}else{ 
                      	$url=base_url('admin');

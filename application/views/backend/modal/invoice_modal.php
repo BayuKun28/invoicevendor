@@ -22,7 +22,7 @@
                             echo form_open($this->uri->uri_string(), $attributes);
                         ?>      
                         <div class="row">
-                            <input type="text" class="id" name="id"/> 
+                            <input type="hidden" class="id" name="id"/> 
                             <div class="col-12 col-md-12">
                             <label for="vendor">Vendor</b></label>
                                 <select class="form-select id_vendor" name="vendor" id="vendor" style="width:100%" required>

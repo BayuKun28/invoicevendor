@@ -62,7 +62,7 @@
             </li>
         
     <!-- MENU KHUSUS ADMIN -->
-        <?php if($this->session->userdata('access')=='1'):?>  
+        <?php if($this->session->userdata('access')=='1') {?>  
             <li class="sidebar-item <?php echo 
                         $this->uri->segment(2) == 'master_vendor' ? 'active': '' 
                         ?> has-sub">
@@ -84,7 +84,6 @@
             </li>
             <li class="sidebar-item <?php echo 
                         $this->uri->segment(2) == 'detail_website' ? 'active': '' ||
-                    
                         $this->uri->segment(2) == 'profil' ? 'active': '' || 
                         $this->uri->segment(2) == 'users' ? 'active': ''
 
@@ -102,31 +101,26 @@
                         <a  href="<?php echo site_url('backend/profil');?>">Profil Setting</a>
                     </li>
                     <li class="submenu-item <?php echo $this->uri->segment(2) == 'users' ? 'active': '' ?>">
-                        <a  href="<?php echo site_url('backend/users');?>">Users Karyawan</a>
+                        <a  href="<?php echo site_url('backend/users');?>">Management Users</a>
                     </li>
                     
                 </ul>
             </li>
 
-    <!-- END MENU KHUSUS ADMIN -->
-        <?php endif;?>
-            <?php if($this->session->userdata('level') == "1"){    ?>
+            <?php } if($this->session->userdata('access')=='2'){ ?>  
+            <li class="sidebar-item <?php echo $this->uri->segment(2) == 'pengeluaran' ? 'active': '' ?>">
+                <a href="<?php echo site_url('backend/CekInvoice');?>" class='sidebar-link'>
+                    <i class="bi-basket-fill"></i>
+                    <span>Cek Invoice</span>
+                </a>
+            </li>
+            <?php }; ?>
                 <li class="sidebar-item">
                     <a href="<?php echo site_url('logout');?>" class='sidebar-link'>
                         <i class="bi bi-arrow-left"></i>
                         <span>Logout</span>
                     </a>
                 </li>
-            <?php } else { ?>
-                <li class="sidebar-item">
-                    <a href="<?php echo site_url('logout_user');?>" class='sidebar-link'>
-                        <i class="bi bi-arrow-left"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-            <?php } ?>
-            
-            
         </ul>
     </div>
 
@@ -157,11 +151,7 @@
                                                 <?php if($this->session->userdata('level') == "1"):?>
                                                 <p class="mb-0 text-sm text-gray-600">Administrator</p>
                                                 <?php elseif($this->session->userdata('level') == "2"):?>
-                                                <p class="mb-0 text-sm text-gray-600">Warehouse</p>
-                                                <?php elseif($this->session->userdata('level') == "3"):?>
-                                                <p class="mb-0 text-sm text-gray-600">Ekspedisi</p>
-                                                <?php else:?>
-                                                <p class="mb-0 text-sm text-gray-600">Karyawan</p> 
+                                                <p class="mb-0 text-sm text-gray-600">Vendor</p>
                                                 <?php endif;?> 
 
                                             </div>
@@ -180,17 +170,9 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    
-                                    <?php if($this->session->userdata('level') == "1"){    ?>
                                         <li><a class="dropdown-item" href="<?php echo site_url('logout');?>"><i
                                                 class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a>
                                         </li>
-                                    <?php } else { ?>
-                                        <li><a class="dropdown-item" href="<?php echo site_url('logout_user');?>"><i
-                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a>
-                                        </li>
-                                    <?php } ?>
-                   
                                 </ul>
                             </div>
                         </div>

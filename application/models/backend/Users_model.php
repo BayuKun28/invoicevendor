@@ -1,10 +1,5 @@
 <?php
 class Users_model extends CI_Model{
-/**
-* Description of Controller
-*
-* @author https://aethershin.com
-*/	
 	
 	var $tableuser = 'tbl_user';
 	var $column_search_user = array('user_id','user_email','user_name','user_password','user_level','user_status','user_photo'); 

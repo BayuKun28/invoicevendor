@@ -33,7 +33,7 @@
                         <?php else:?>
 
                         <?php endif;?>
-<!-- FILTER -->
+                <!-- FILTER -->
                 <a class="btn icon btn-sm btn-success float-end" onclick="add_invoice()"><i class="bi bi-plus"></i></a>&nbsp;&nbsp;
                 <br/><br/>
                 <div class="table-responsive">
@@ -168,6 +168,8 @@ function edit_invoice(id_invoice)
                 $('[name="nominal"]').val(data.nominal);
                 $('[name="tgl_pembayaran"]').val(data.tgl_pembayaran);
                 $('[name="status"]').val(data.status);
+                var $hasilvendor = $("<option selected='selected'></option>").val(data.id_vendor).text(data.namavendor);
+                $("#vendor").append($hasilvendor).trigger('change');
                 $('#modal_form_invoice').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown)

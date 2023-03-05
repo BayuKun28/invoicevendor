@@ -1,5 +1,5 @@
 <?php
-class Invoice_model extends CI_Model{
+class CekInvoice_model extends CI_Model{
 
 
 	var $tableinvoice = 'invoice';

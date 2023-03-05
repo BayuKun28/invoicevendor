@@ -5,7 +5,7 @@ class Users extends CI_Controller{
 		parent::__construct();
 		error_reporting(0);
 		if($this->session->userdata('access') != "1"){
-			$url=base_url('login_user');
+			$url=base_url('/');
             redirect($url);
 		};
 		$this->load->model('backend/Users_model','users_model');
@@ -23,7 +23,7 @@ class Users extends CI_Controller{
         $data['site_title'] = $site['site_title'];
         $data['site_favicon'] = $site['site_favicon'];
         $data['images'] = $site['images'];
-		$data['title'] = 'Users Karyawan';
+		$data['title'] = 'Management Users';
 		$data['jsonfilepstudi'] = json_decode($getfilepstudi);
 		$this->load->view('backend/menu',$data);
 		$this->load->view('backend/modal/user_modal');
@@ -57,13 +57,8 @@ class Users extends CI_Controller{
 			if($level == 1) {
 				$ket_level = 'Admin';
 
-			} else if($level == 2) {
-				$ket_level = 'Warehouse';
-
-			} else if ($level == 3) {
-				$ket_level = 'Ekspedisi';
 			} else {
-				$ket_level = 'Karyawan';
+				$ket_level = 'Vendors';
 			}
 			$no++;
 			$row = array();

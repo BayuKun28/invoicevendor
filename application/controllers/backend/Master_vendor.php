@@ -5,7 +5,7 @@ class Master_vendor extends CI_Controller{
 		parent::__construct();
 		error_reporting(0);
 		if($this->session->userdata('access') != "3" && $this->session->userdata('access') != "1"){
-			$url=base_url('login_user');
+			$url=base_url('/');
             redirect($url);
 		};
 		$this->load->model('backend/Vendors_model','vendors_model');

@@ -1,15 +1,10 @@
 <?php
 class Dashboard extends CI_Controller{
-/**
-* Description of Controller
-*
-* @author https://aethershin.com
-*/
 	function __construct(){
 		parent::__construct();
 		error_reporting(0);
 		if($this->session->userdata('logged') !=TRUE){
-            $url=base_url('login_user');
+            $url=base_url('/');
             redirect($url);
         };
 		$this->load->model('backend/Dashboard_model', 'dashboard_model');
@@ -39,7 +34,7 @@ class Dashboard extends CI_Controller{
 	        $data['title'] = 'Dashboard';
 	        	$this->load->view('backend/menu',$data);
         		$this->load->view('backend/_partials/templatejs');
-			$this->load->view('backend/v_dashboard_karyawan',$data);
+			$this->load->view('backend/v_dashboard_vendor',$data);
 		}
 	}
 }

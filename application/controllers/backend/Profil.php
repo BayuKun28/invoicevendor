@@ -1,15 +1,11 @@
 <?php
 class Profil extends CI_Controller{
-/**
-* Description of Controller
-*
-* @author https://aethershin.com
-*/	
+
 	function __construct(){
 		parent::__construct();
 		error_reporting(0);
 		if($this->session->userdata('logged') !=TRUE){
-            $url=base_url('login_user');
+            $url=base_url('/');
             redirect($url);
         };
 		$this->load->model('backend/Profil_setting_model','profil_setting_model');

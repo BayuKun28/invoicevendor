@@ -104,9 +104,7 @@
                                     <select class="form-select level" name="level" id="level" style="width:100%" required>
                                             <option value="">[Pilih Tipe Akun]</option>
                                             <option value="1">Admin</option>
-                                            <option value="2">Warehouse</option>
-                                            <option value="3">Ekspedisi</option>
-                                            <option value="4">Karyawan</option>
+                                            <option value="2">Vendor</option>
                                     </select>
                                     <span class="help-block text-danger"></span>
                                 </div>
