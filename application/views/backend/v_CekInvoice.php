@@ -18,7 +18,7 @@
                             </div>
                                     <div class="col-12 col-md-4">
                                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                                    <button type="button" id="btn-filter" class="btn btn-primary"><i class="bi bi-search"></i> Filter Data</button>&nbsp;&nbsp;
+                                    <button type="button" id="btn-filter" class="btn btn-primary"><i class="bi bi-search"></i> Cek</button>&nbsp;&nbsp;
                                     <button type="button" id="btn-reset" class="btn btn-success"><i class="bi bi-bootstrap-reboot"></i> Refresh</button>
                                 </div>
                             </div>
