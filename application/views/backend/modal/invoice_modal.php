@@ -25,7 +25,7 @@
                             <input type="hidden" class="id" name="id"/> 
                             <div class="col-12 col-md-12">
                             <label for="vendor">Vendor</b></label>
-                                <select class="form-select id_vendor" name="vendor" id="vendor" style="width:100%" required>
+                                <select class="form-select" name="vendor" id="vendor" style="width:100%" required>
                                     <option value="">[Pilih Vendor]</option>
                                     <?php foreach ($vendors->result() as $row) : ?>
                                         <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
@@ -56,8 +56,11 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="status">Status</b></label>
-                                    <input type="text" name="status" class="form-control" id="status" placeholder="Masukkan Status" required>
-                                    <span class="help-block text-danger"></span>
+                                    <select class="form-select" name="status" id="status" style="width:100%" required>
+                                    <option value="">[Pilih Status]</option>
+                                        <option value="Rencana Pembayaran">Rencana Pembayaran</option>
+                                        <option value="Sudah Dibayar">Sudah Dibayar</option>
+                                </select>
                                 </div>
                             </div>
                         </div>

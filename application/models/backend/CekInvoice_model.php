@@ -19,7 +19,11 @@ class CekInvoice_model extends CI_Model{
 		{
 			$this->db->like('kwitansi', $this->input->post('kwitansi'));
 		}
-		$this->db->select('*,invoice.id as kode');
+		if($this->input->post('status_pembayaran'))
+		{
+			$this->db->like('status', $this->input->post('status_pembayaran'));
+		}
+		$this->db->select('*,invoice.id as kode,invoice.status as status_pembayaran');
 		$this->db->from('invoice');
 		$i = 0;
 		foreach ($this->column_search_invoice as $item)

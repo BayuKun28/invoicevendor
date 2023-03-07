@@ -103,11 +103,12 @@ $(document).ready(function() {
     });
    
           
+            $("#vendor").select2({
+                cache: false,
+                theme: "bootstrap-5",
+                dropdownParent: $('#modal_form')
+            });
 
-
-            
-            
-    
 
     //set input/textarea/select event when change value, remove class error and remove text help block 
     $("#nama").change(function(){
@@ -151,6 +152,7 @@ function add_person()
     $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Users Karyawan'); // Set Title to Bootstrap modal title bg-success 
+    document.getElementById("linevendors").classList.add("d-none");
     $("#level").select2({
         dropdownParent: $("#modal_form"),
         cache: false,
@@ -189,6 +191,7 @@ function edit_person(user_id)
                     cache: false,
                     theme: "bootstrap-5",
                 }).val(data.user_level).trigger("change");
+                $('[name="vendor"]').val(data.vendor);
 
                 $('#modal_form').modal('hide'); // show bootstrap modal
         },
@@ -213,6 +216,7 @@ function proc()
     var password = $(".password").val();
     var conf_pass = $(".conf_pass").val();
     var level = $(".level").val();
+    var vendor = $(".vendor").val();
     var user_photo = $("#user_photo")[0].files[0];
     
     var fd = new FormData();    
@@ -222,6 +226,7 @@ function proc()
     fd.append("password", password);
     fd.append("conf_pass", conf_pass);
     fd.append("level", level);
+    fd.append("vendor", vendor);
     fd.append("user_photo", user_photo);
     fd.append("<?php echo $this->security->get_csrf_token_name(); ?>", '<?php echo
 $this->security->get_csrf_hash(); ?>');

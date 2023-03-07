@@ -67,6 +67,7 @@ class Invoice extends CI_Controller{
 	}
 
 	function add(){
+		$this->_validate();
 		$nominal = $this->input->post('nominal',TRUE);
 		$nominalshow = "Rp " . number_format($nominal, 0, "", ",");
 		$users = $this->session->userdata('id');
@@ -76,7 +77,7 @@ class Invoice extends CI_Controller{
 			"kwitansi" => $this->input->post('kwitansi',TRUE),
 			"nominal" => $this->input->post('nominal',TRUE),
 			"tgl_pembayaran" => $this->input->post('tgl_pembayaran',TRUE),
-			"status" => $this->input->post('kwitansi',TRUE)
+			"status" => $this->input->post('status',TRUE)
 		);
 		$insert = $this->invoice_model->insert_invoice($arraysql);
 
@@ -161,48 +162,40 @@ class Invoice extends CI_Controller{
 		$data['error_string'] = array();
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
-		$allowed_image_extension = array(
-	        "png",
-	        "jpg",
-	        "jpeg",
-	        "webp",
-	    );
-	    $file_extension_picture_1 = pathinfo($_FILES["picture_1"]["name"], PATHINFO_EXTENSION);
-	    $ket = $this->input->post('ket');
-		if($this->input->post('ket') == '')
+		
+		if($this->input->post('vendor') == '')
 		{
-			$data['inputerror'][] = 'ket';
-			$data['error_string'][] = 'Form Keterangan harus berisi';
+			$data['inputerror'][] = 'vendor';
+			$data['error_string'][] = 'Form Vendor harus berisi';
 			$data['status'] = FALSE;
 		}
-		$ketlength= strlen($ket);
-		if($ketlength < 3)
+		if($this->input->post('kwitansi') == '')
 		{
-			$data['inputerror'][] = 'ket';
-			$data['error_string'][] = 'Keterangan Minimal 3 karakter';
+			$data['inputerror'][] = 'kwitansi';
+			$data['error_string'][] = 'Form Kwitansi harus berisi';
 			$data['status'] = FALSE;
 		}
-		if($this->input->post('biaya') == '')
+		if($this->input->post('nominal') == '')
 		{
-			$data['inputerror'][] = 'biaya';
-			$data['error_string'][] = 'Form Biaya harus berisi';
+			$data['inputerror'][] = 'nominal';
+			$data['error_string'][] = 'Form Nominal harus berisi';
 			$data['status'] = FALSE;
 		}
-		if (empty($_FILES['picture_1']['name'])) {
-			$data['inputerror'][] = 'picture_1';
-			$data['error_string'][] = 'Form Upload Bukti harus berisi';
+
+		if($this->input->post('tgl_pembayaran') == '')
+		{
+			$data['inputerror'][] = 'tgl_pembayaran';
+			$data['error_string'][] = 'Form Tanggal Pembayaran harus berisi';
 			$data['status'] = FALSE;
 		}
-		if (($_FILES["picture_1"]["size"] > 5000000)) {
-			$data['inputerror'][] = 'picture_1';
-			$data['error_string'][] = 'Image size maksimal 5MB';
+
+		if($this->input->post('status') == '')
+		{
+			$data['inputerror'][] = 'status';
+			$data['error_string'][] = 'Form Status harus berisi';
 			$data['status'] = FALSE;
-	    }
-	    if (!in_array($file_extension_picture_1, $allowed_image_extension)) {
-	        $data['inputerror'][] = 'picture_1';
-			$data['error_string'][] = 'Format File *jpg,png,jpeg,webp';
-			$data['status'] = FALSE;
-	    }
+		}
+
 		if($data['status'] === FALSE)
 		{
 			echo json_encode($data);

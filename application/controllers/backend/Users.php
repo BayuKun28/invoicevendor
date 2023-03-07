@@ -9,6 +9,7 @@ class Users extends CI_Controller{
             redirect($url);
 		};
 		$this->load->model('backend/Users_model','users_model');
+		$this->load->model('backend/Invoice_model','invoice_model');
 		$this->load->model('Site_model','site_model');
 		$this->load->library('upload');
 		$this->load->helper('text');
@@ -25,6 +26,7 @@ class Users extends CI_Controller{
         $data['images'] = $site['images'];
 		$data['title'] = 'Management Users';
 		$data['jsonfilepstudi'] = json_decode($getfilepstudi);
+		$data['vendors'] = $this->invoice_model->get_all_vendors();
 		$this->load->view('backend/menu',$data);
 		$this->load->view('backend/modal/user_modal');
 		$this->load->view('backend/_partials/templatejs');
@@ -109,6 +111,7 @@ class Users extends CI_Controller{
 						'user_email' => $this->input->post('email'),
 						'user_password' => MD5($this->input->post('password')),
 						'user_level' => $this->input->post('level'),
+						'vendor' => $this->input->post('vendor'),
 						'user_status' => '1',
 						'user_photo' => $bg_filefotoprofil,
 					);
@@ -141,6 +144,7 @@ class Users extends CI_Controller{
 					'user_email' => $this->input->post('email'),
 					'user_password' => MD5($this->input->post('password')),
 					'user_level' => $this->input->post('level'),
+					'vendor' => $this->input->post('vendor'),
 					'user_status' => '1',
 					'user_photo' => 'user_blank.webp',
 				);
@@ -214,6 +218,8 @@ class Users extends CI_Controller{
 							$ajax_data['user_name'] = $this->input->post('nama');
 							$ajax_data['user_email'] = $this->input->post('email');
 							$ajax_data['user_level'] = $this->input->post('level');
+							$ajax_data['vendor'] = $this->input->post('vendor');
+
 							if ($this->users_model->update_entry($userid, $ajax_data)) {
 								echo json_encode(array("status" => TRUE));
 							} else {
@@ -224,6 +230,7 @@ class Users extends CI_Controller{
 							$ajax_data['user_email'] = $this->input->post('email');
 							$ajax_data['user_level'] = $this->input->post('level');
 							$ajax_data['user_password'] = MD5($this->input->post('password'));
+							$ajax_data['vendor'] = $this->input->post('vendor');
 							
 							if ($this->users_model->update_entry($userid, $ajax_data)) {
 								echo json_encode(array("status" => TRUE));

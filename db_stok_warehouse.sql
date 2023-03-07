@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 03, 2023 at 09:12 AM
+-- Generation Time: Mar 07, 2023 at 08:24 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `status` varchar(255) NOT NULL,
   `id_vendor` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `invoice`
@@ -77,8 +77,10 @@ INSERT INTO `invoice` (`id`, `kwitansi`, `nominal`, `tgl_pembayaran`, `status`, 
 (1, '12345678', 1200000, '2023-03-03', 'a', 1),
 (2, '213', 123, '2023-03-10', '213', 6),
 (3, '123', 123, '2023-03-03', '123', 6),
-(4, '213', 123, '2023-03-03', '213', 6),
-(5, '213123123123', 123123123, '2023-03-03', '213123123123', 6);
+(4, '222222222222222', 222222222222222, '2023-03-05', '2222222222222222', 5),
+(8, '1213', 123123, '2023-03-07', 'Rencana Pembayaran', 6),
+(9, '213', 12312, '2023-03-07', '213', 6),
+(10, '312', 123, '2023-03-07', 'Sudah Dibayar', 6);
 
 -- --------------------------------------------------------
 
@@ -330,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `tbl_log` (
   `ket` varchar(255) DEFAULT NULL,
   `tgl_log` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_log`
@@ -343,7 +345,16 @@ INSERT INTO `tbl_log` (`id`, `ket`, `tgl_log`) VALUES
 (4, '<b>Zikry</b> Melakukan Edit Vendors <b>aaaa</b>', '2023-03-03 03:10:09'),
 (5, '<b>Zikry</b> Melakukan Edit Vendors <b>aaaa</b>', '2023-03-03 03:13:55'),
 (6, '<b>Zikry</b> Melakukan Edit Vendors <b>aaaaaaz</b>', '2023-03-03 03:14:12'),
-(7, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp 123,123,123</b> Untuk Vendor 6', '2023-03-03 08:25:24');
+(7, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp 123,123,123</b> Untuk Vendor 6', '2023-03-03 08:25:24'),
+(8, '<b>Admin</b> Mengubah Nominal Sebesar <b>Rp 123 Menjadi Rp 1,111,111,111,111,111,168</b> ', '2023-03-05 02:19:58'),
+(9, '<b>Admin</b> Mengubah Nominal Sebesar <b>Rp 1,111,111,111,111,111,168 Menjadi Rp 222,222,222,222,222</b> ', '2023-03-05 02:20:37'),
+(10, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp </b> Untuk Vendor ', '2023-03-07 06:32:45'),
+(11, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp </b> Untuk Vendor 6', '2023-03-07 06:33:17'),
+(12, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp 123,123</b> Untuk Vendor 6', '2023-03-07 06:41:05'),
+(13, '<b>Admin</b> Mengubah Nominal Sebesar <b>Rp 123,123 Menjadi Rp 123,123</b> ', '2023-03-07 06:41:24'),
+(14, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp 12,312</b> Untuk Vendor 6', '2023-03-07 06:41:36'),
+(15, '<b>Admin</b> Menambah Invoice Sebesar <b>Rp 123</b> Untuk Vendor 6', '2023-03-07 06:42:28'),
+(16, '<b>Admin</b> Mengubah Nominal Sebesar <b>Rp 123 Menjadi Rp 123</b> ', '2023-03-07 08:24:18');
 
 -- --------------------------------------------------------
 
@@ -611,17 +622,22 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `user_level` varchar(10) DEFAULT NULL,
   `user_status` varchar(10) DEFAULT '1',
   `user_photo` varchar(40) DEFAULT NULL,
+  `vendor` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `user_name`, `user_email`, `user_password`, `user_level`, `user_status`, `user_photo`) VALUES
-(1, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '1', '1', '59fd2fc8eb0a635161cd5ee4a22516b6.png'),
-(2, 'Hendra Ekspedisi', 'ekspedisi@gmail.com', '928920597d85e012970304984e633a5a', '3', '1', '0455c308a1c9922f734fd2d977b34fe8.webp'),
-(3, 'Rahmat Warehouse', 'warehouse@gmail.com', '372d30dd2849813ef674855253900679', '2', '1', '8cf49c4c37f819e7cb3a1fbdb82955a2.webp');
+INSERT INTO `tbl_user` (`user_id`, `user_name`, `user_email`, `user_password`, `user_level`, `user_status`, `user_photo`, `vendor`) VALUES
+(1, 'Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', '1', '1', '59fd2fc8eb0a635161cd5ee4a22516b6.png', NULL),
+(2, 'Hendra Ekspedisi', 'ekspedisi@gmail.com', '928920597d85e012970304984e633a5a', '2', '1', '0455c308a1c9922f734fd2d977b34fe8.webp', 5),
+(3, 'Rahmat Warehouse', 'warehouse@gmail.com', '372d30dd2849813ef674855253900679', '2', '1', '8cf49c4c37f819e7cb3a1fbdb82955a2.webp', NULL),
+(4, 'tes vendor', 'vendor@gmail.com', '25d55ad283aa400af464c76d713c07ad', '2', '1', 'user_blank.webp', 5),
+(5, 'Bayu', 'bayu@gmail.com', '25d55ad283aa400af464c76d713c07ad', '2', '1', 'user_blank.webp', 5),
+(6, 'isnan', 'isnan@gmail.com', '25d55ad283aa400af464c76d713c07ad', '2', '1', 'user_blank.webp', NULL),
+(7, 'adasdasd', 'asdasdsa@gmail.com', '25d55ad283aa400af464c76d713c07ad', '2', '1', 'user_blank.webp', 2);
 
 -- --------------------------------------------------------
 

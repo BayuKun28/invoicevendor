@@ -101,12 +101,24 @@
                                 </script>
                                 <div class="form-group">
                                     <label for="valid-state">Tipe Akun</label>
-                                    <select class="form-select level" name="level" id="level" style="width:100%" required>
+                                    <select class="form-select level" name="level" id="level" onchange="setVendor(this.value)" style="width:100%" required>
                                             <option value="">[Pilih Tipe Akun]</option>
                                             <option value="1">Admin</option>
                                             <option value="2">Vendor</option>
                                     </select>
                                     <span class="help-block text-danger"></span>
+                                </div>
+
+                                <div class="form-group" id="linevendors">
+                                    <label for="valid-state">Vendor</label>
+                                    <select class="form-select vendor" name="vendor" id="vendor" style="width:100%">
+                                        <option value="">[Pilih Vendor]</option>
+                                        <?php foreach ($vendors->result() as $row) : ?>
+                                            <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                    <span class="help-block text-danger"></span>
+                                    <span class="text-primary">Jika Tipe User sebagai <b>Vendor</b> maka <b>Form Vendor</b> harus di isi</span>
                                 </div>
                 
                             </div>
@@ -131,3 +143,14 @@
 
 
 <!-- END MODAL -->
+
+<script type="application/javascript">
+    function setVendor(x){
+      if(x == '2'){
+        document.getElementById("linevendors").classList.remove("d-none");
+      }else{
+        document.getElementById("linevendors").classList.add("d-none");
+        }
+      }
+      setVendor(document.getElementById("level").value);
+</script>

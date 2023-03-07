@@ -21,6 +21,13 @@
                                     <?php endforeach;?>
                                 </select>
                             </div>
+                            <div class="col-12 col-md-4">
+                                <select class="form-select" name="status_pembayaran" id="status_pembayaran" style="width:100%" required>
+                                    <option value="">[Pilih Status]</option>
+                                        <option value="Rencana Pembayaran">Rencana Pembayaran</option>
+                                        <option value="Sudah Dibayar">Sudah Dibayar</option>
+                                </select>
+                            </div>
                                     <div class="col-12 col-md-4">
                                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
                                     <button type="button" id="btn-filter" class="btn btn-primary"><i class="bi bi-search"></i> Filter Data</button>&nbsp;&nbsp;
@@ -89,7 +96,8 @@ $(document).ready(function() {
             "url": "<?php echo site_url('backend/invoice/get_ajax_list')?>",
             "type": "POST",
             "data": function ( data ) {
-                data.id_vendor = $('#id_vendor').val();
+                data.status_pembayaran = $('#status_pembayaran').val(),
+                data.id_vendor = $('#id_vendor').val()
             }
         },
 

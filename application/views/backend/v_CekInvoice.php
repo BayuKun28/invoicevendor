@@ -16,6 +16,13 @@
                             <input type="text" class="form-control" name="kwitansihidden" id="kwitansihidden" placeholder="Ketik Kwitansi Disini" style="display: none;"> 
                             <input type="text" class="form-control kwitansi" name="kwitansi" id="kwitansi" placeholder="Ketik Kwitansi Disini">   
                             </div>
+                            <div class="col-12 col-md-4">
+                                <select class="form-select" name="status_pembayaran" id="status_pembayaran" style="width:100%" required>
+                                    <option value="">[Pilih Status]</option>
+                                        <option value="Rencana Pembayaran">Rencana Pembayaran</option>
+                                        <option value="Sudah Dibayar">Sudah Dibayar</option>
+                                </select>
+                            </div>
                                     <div class="col-12 col-md-4">
                                 <div class="btn-group mb-3" role="group" aria-label="Basic example">
                                     <button type="button" id="btn-filter" class="btn btn-primary"><i class="bi bi-search"></i> Cek</button>&nbsp;&nbsp;
@@ -81,7 +88,8 @@ $(document).ready(function() {
             "url": "<?php echo site_url('backend/CekInvoice/get_ajax_list')?>",
             "type": "POST",
             "data": function ( data ) {
-                data.kwitansi = $('#kwitansihidden').val();
+                data.status_pembayaran = $('#status_pembayaran').val(),
+                data.kwitansi = $('#kwitansihidden').val()
             }
         },
 
