@@ -170,7 +170,6 @@ function edit_person(user_id)
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Edit Users Karyawan'); // Set title to Bootstrap modal title
     $('.show_edit').text('*Kosongkan Form Gambar dan Password jika tidak ingin menggantinya'); // Set title to Bootstrap modal title
-    
     var base_url = '<?php echo base_url(); ?>';
     //Ajax Load data from ajax
     $.ajax({
@@ -191,7 +190,8 @@ function edit_person(user_id)
                     cache: false,
                     theme: "bootstrap-5",
                 }).val(data.user_level).trigger("change");
-                $('[name="vendor"]').val(data.vendor);
+                var $hasilvendor = $("<option selected='selected'></option>").val(data.vendor).text(data.namavendor);
+                $('[name="vendor"]').append($hasilvendor).trigger('change');
 
                 $('#modal_form').modal('hide'); // show bootstrap modal
         },

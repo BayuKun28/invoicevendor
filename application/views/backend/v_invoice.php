@@ -182,7 +182,7 @@ function edit_invoice(id_invoice)
                 $('[name="tgl_pembayaran"]').val(data.tgl_pembayaran);
                 $('[name="status"]').val(data.status);
                 var $hasilvendor = $("<option selected='selected'></option>").val(data.id_vendor).text(data.namavendor);
-                $("#vendor").append($hasilvendor).trigger('change');
+                $('[name="vendor"]').append($hasilvendor).trigger('change');
                 $('#modal_form_invoice').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown)

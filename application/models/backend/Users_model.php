@@ -86,7 +86,9 @@ class Users_model extends CI_Model{
 
     public function get_by_id($user_id)
 	{
+		$this->db->select('tbl_user.*,vendors.nama as namavendor');
 		$this->db->from($this->tableuser);
+		$this->db->join( 'vendors', 'tbl_user.vendor = vendors.id' , 'left' );
 		$this->db->where('user_id',$user_id);
 		$query = $this->db->get();
 		return $query->row();
