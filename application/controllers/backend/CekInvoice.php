@@ -27,7 +27,8 @@ class CekInvoice extends CI_Controller{
 	}
 	public function get_ajax_list()
 	{
-		$list = $this->cekinvoice_model->get_datatables();
+		$idvendor = $this->session->userdata('vendor');
+		$list = $this->cekinvoice_model->get_datatables($idvendor);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $d) {
@@ -44,8 +45,8 @@ class CekInvoice extends CI_Controller{
 
 		$output = array(
 						"draw" => $_POST['draw'],
-						"recordsTotal" => $this->cekinvoice_model->count_all(),
-						"recordsFiltered" => $this->cekinvoice_model->count_filtered(),
+						"recordsTotal" => $this->cekinvoice_model->count_all($idvendor),
+						"recordsFiltered" => $this->cekinvoice_model->count_filtered($idvendor),
 						"data" => $data,
 				);
 		//output to json format

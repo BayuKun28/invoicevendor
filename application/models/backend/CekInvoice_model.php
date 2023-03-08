@@ -48,9 +48,10 @@ class CekInvoice_model extends CI_Model{
 
 
 	}
-	function get_datatables(){
+	function get_datatables($idvendor){
 
 		$this->db->join( 'vendors', 'invoice.id_vendor = vendors.id' , 'left' );
+		$this->db->where('invoice.id_vendor',$idvendor);
 		$this->db->order_by('invoice.id', 'desc');
 		$this->_get_datatables_query();
 		if($_POST['length'] != -1)
@@ -60,16 +61,19 @@ class CekInvoice_model extends CI_Model{
 		return $query->result();
 	}
 
-	public function count_filtered()
+	public function count_filtered($idvendor)
 	{
 		$this->_get_datatables_query();
-		$query = $this->db->get();
+		$query = $this->db
+				->where('id_vendor',$idvendor)
+				->get();
 		return $query->num_rows();
 	}
 
-	public function count_all()
+	public function count_all($idvendor)
 	{
 		$this->db->from($this->tableinvoice);
+		$this->db->where('id_vendor',$idvendor);
 		return $this->db->count_all_results();
 	}
 	function get_all_vendors(){

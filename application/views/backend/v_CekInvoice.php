@@ -75,7 +75,7 @@ data: csfrData
 });
 $(document).ready(function() {
 
-    $('#kwitansihidden').val('defaultkosong');
+    // $('#kwitansihidden').val('defaultkosong');
 
     //datatables
     table = $('#mytable').DataTable({
@@ -108,7 +108,7 @@ $(document).ready(function() {
     });
     $('#btn-reset').click(function(){
         $('#form-filter')[0].reset();
-        $('#kwitansihidden').val('defaultkosong');
+        // $('#kwitansihidden').val('defaultkosong');
         table.ajax.reload();
     });
 

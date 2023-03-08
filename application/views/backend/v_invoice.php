@@ -112,10 +112,7 @@ $(document).ready(function() {
     });
 
 
-    $("#nama").change(function(){
-        $(this).parent().parent().removeClass('has-error');
-        $(this).next().empty();
-    });
+    
     $('#btn-filter').click(function(){
         table.ajax.reload();
     });
@@ -131,13 +128,13 @@ $(document).ready(function() {
 
             $("#id_vendor").select2({
                 cache: false,
-                theme: "bootstrap-5",
+                theme: "bootstrap-5"
             });
 
             $("#vendor").select2({
                 cache: false,
                 theme: "bootstrap-5",
-                dropdownParent: $('#modal_form_invoice')
+                dropdownParent: $('#forminvoice')
             });
 
 });
@@ -151,6 +148,13 @@ function add_invoice()
     $('.show_edit').empty(); // clear error class
     $('.form-group').removeClass('has-error');
     $('.help-block').empty();
+    $("#vendor").select2("destroy");
+    $("#vendor").select2({
+                cache: false,
+                theme: "bootstrap-5",
+                dropdownParent: $('#forminvoice')
+            }); 
+    $("#vendor").val('').trigger('change');
     $('#modal_form_invoice').modal('show');
     $('.modal-title').text('Tambah Invoice');
 
@@ -164,6 +168,7 @@ function edit_invoice(id_invoice)
     $('.help-block').empty();
     $('#modal_form_invoice').modal('show');
     $('.modal-title').text('Edit Invoice');
+    
     var base_url = '<?php echo base_url(); ?>';
     $.ajax({
         url : "<?php echo site_url('backend/invoice/ajax_edit/')?>/" + id_invoice,
@@ -242,7 +247,11 @@ function addinvoice()
                 {
                     $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error');
                     $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]);
-
+                    $("#vendor").select2({
+                        cache: false,
+                        theme: "bootstrap-5",
+                        dropdownParent: $('#forminvoice')
+                    }); 
                 }
             }
             $('#btnSave').text('Save');

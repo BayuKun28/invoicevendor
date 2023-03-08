@@ -24,13 +24,16 @@
                         <div class="row">
                             <input type="hidden" class="id" name="id"/> 
                             <div class="col-12 col-md-12">
-                            <label for="vendor">Vendor</b></label>
-                                <select class="form-select" name="vendor" id="vendor" style="width:100%" required>
-                                    <option value="">[Pilih Vendor]</option>
-                                    <?php foreach ($vendors->result() as $row) : ?>
-                                        <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
-                                    <?php endforeach;?>
-                                </select>
+                                <div class="form-group">
+                                    <label for="vendor">Vendor</b></label>
+                                    <select class="form-select" name="vendor" id="vendor" style="width:100%" required>
+                                        <option value="">[Pilih Vendor]</option>
+                                        <?php foreach ($vendors->result() as $row) : ?>
+                                            <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                    <span class="help-block text-danger"></span>
+                                </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">

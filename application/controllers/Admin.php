@@ -53,11 +53,13 @@ class Admin extends CI_Controller{
                     	$id=$x['user_id'];
                     	$name=$x['user_name'];
                         $level=$x['user_level'];
+                        $vendor=$x['vendor'];
     					
                         $user_photo=$x['user_photo'];
                     	$this->session->set_userdata('id',$id);
                     	$this->session->set_userdata('name',$name);
                         $this->session->set_userdata('level',$level);
+                        $this->session->set_userdata('vendor',$vendor);
     					
                         $this->session->set_userdata('user_photo',$user_photo);
                     	redirect('backend/dashboard');
@@ -66,11 +68,13 @@ class Admin extends CI_Controller{
                     	$id=$x['user_id'];
                     	$name=$x['user_name'];
                         $level=$x['user_level'];
+                        $vendor=$x['vendor'];
     					
                         $user_photo=$x['user_photo'];
                     	$this->session->set_userdata('id',$id);
                     	$this->session->set_userdata('name',$name);
                         $this->session->set_userdata('level',$level);
+                        $this->session->set_userdata('vendor',$vendor);
     					
                         $this->session->set_userdata('user_photo',$user_photo);
                     	redirect('backend/dashboard');
