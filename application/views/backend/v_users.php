@@ -190,9 +190,14 @@ function edit_person(user_id)
                     cache: false,
                     theme: "bootstrap-5",
                 }).val(data.user_level).trigger("change");
-                var $hasilvendor = $("<option selected='selected'></option>").val(data.vendor).text(data.namavendor);
-                $('[name="vendor"]').append($hasilvendor).trigger('change');
 
+                $("#vendor").select2({
+                    dropdownParent: $("#modal_form"),
+                    cache: false,
+                    theme: "bootstrap-5",
+                }).val(data.vendor).trigger("change");
+                
+             
                 $('#modal_form').modal('hide'); // show bootstrap modal
         },
         error: function (jqXHR, textStatus, errorThrown)

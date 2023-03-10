@@ -181,8 +181,11 @@ function edit_invoice(id_invoice)
                 $('[name="nominal"]').val(data.nominal);
                 $('[name="tgl_pembayaran"]').val(data.tgl_pembayaran);
                 $('[name="status"]').val(data.status);
-                var $hasilvendor = $("<option selected='selected'></option>").val(data.id_vendor).text(data.namavendor);
-                $('[name="vendor"]').append($hasilvendor).trigger('change');
+                $("#vendor").select2({
+                    dropdownParent: $("#forminvoice"),
+                    cache: false,
+                    theme: "bootstrap-5",
+                }).val(data.id_vendor).trigger("change");
                 $('#modal_form_invoice').modal('hide');
         },
         error: function (jqXHR, textStatus, errorThrown)
