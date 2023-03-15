@@ -48,10 +48,6 @@ class Users_model extends CI_Model{
 		
 	}
 	function get_datatables(){
-		$email_super = 'admbiopure.id@gmail.com';
-		$dev = 'Zikry';
-		$this->db->where_not_in ( 'user_email', $email_super);
-		$this->db->where_not_in ( 'user_name', $dev);
 		$this->db->order_by('user_id', 'desc');
 		
 		$this->_get_datatables_query();
@@ -64,10 +60,6 @@ class Users_model extends CI_Model{
 	public function count_filtered()
 	{
 		$this->_get_datatables_query();
-		$email_super = 'admbiopure.id@gmail.com';
-		$dev = 'Zikry';
-		$this->db->where_not_in ( 'user_email', $email_super);
-		$this->db->where_not_in ( 'user_name', $dev);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -75,10 +67,6 @@ class Users_model extends CI_Model{
 	public function count_all()
 	{
 		$this->db->from($this->tableuser);
-		$email_super = 'admbiopure.id@gmail.com';
-		$dev = 'Zikry';
-		$this->db->where_not_in ( 'user_email', $email_super);
-		$this->db->where_not_in ( 'user_name', $dev);
 		return $this->db->count_all_results();
 	}
 

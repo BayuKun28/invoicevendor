@@ -18,7 +18,6 @@
 
                 <div class="btn-group mb-3  float-end" role="group" aria-label="Basic example">
                     <a class="btn icon btn-sm btn-success" id="btn-validate-import" onclick="add_vendor()"><i class="bi bi-plus"></i></a>
-
                 </div>
                 <br/><br/>
 
@@ -28,6 +27,7 @@
                         <tr>
                                     <th>No</th>
                                     <th class="col-4">ID Vendor</th>
+                                    <th class="col-4">NPWP</th>
                                     <th class="col-4">Nama Vendor</th>
                                     <th class="col-1">Aksi</th>
                                 </tr>
@@ -92,7 +92,7 @@ $(document).ready(function() {
         //Set column definition initialisation properties.
         "columnDefs": [
             {
-                "targets": [ 0,1], //first column
+                "targets": [ 0,1,2], //first column
                 "orderable": false, //set not orderable
             },
             
@@ -150,6 +150,7 @@ function edit_vendor(id_vendor)
             
                 $('[name="id"]').val(data.id);
                 $('[name="nama"]').val(data.nama);
+                $('[name="npwp"]').val(data.npwp);
 
                 $('#modal_form_vendor').modal('hide'); 
         },

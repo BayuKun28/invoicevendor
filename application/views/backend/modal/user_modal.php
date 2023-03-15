@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                    
-                                    <input type="email" name="email" class="form-control email" id="email" placeholder="Email">
+                                    <input type="email" name="email" class="form-control email" id="email" placeholder="Email / NPWP">
                                     <span class="help-block text-danger"></span>
                                 </div>
                                

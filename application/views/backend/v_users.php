@@ -27,7 +27,7 @@
                         <tr>
                             <th>No</th>
                             <th>Poto Profil</th>
-                            <th class="col-4">Email</th>
+                            <th class="col-4">Email / NPWP</th>
                             <th class="col-2">Nama</th>
                             <th class="col-2">Tipe Akun</th>
                             <th class="col-2">Status</th>

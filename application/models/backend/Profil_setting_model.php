@@ -26,6 +26,15 @@ class Profil_setting_model extends CI_Model{
     {
         return $this->db->update('tbl_user', $data, array('user_id' => $id));
     }
+
+	public function getidvendor($id)
+	{
+		$query = "SELECT * FROM tbl_user tu 
+					JOIN vendors v on v.id = tu.vendor
+					WHERE tu.user_id = $id";
+		return $this->db->query($query)->row_array();
+		echo json_encode($query);
+	}
 	
 	
     public function single_entry($id)

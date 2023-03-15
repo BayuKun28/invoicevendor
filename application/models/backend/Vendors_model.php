@@ -4,7 +4,7 @@ class Vendors_model extends CI_Model{
 	var $tablevendors = 'vendors';
 	var $column_search_cicil = array('id'); 
 	var $tablelog = 'tbl_log';
-	var $column_search_vendors = array('nama'); 
+	var $column_search_vendors = array('nama','npwp'); 
 	var $order = array('id' => 'desc'); // default order 
 	
 
@@ -20,6 +20,10 @@ class Vendors_model extends CI_Model{
 		if($this->input->post('nama'))
 		{
 			$this->db->like('nama', $this->input->post('nama'));
+		}
+		if($this->input->post('npwp'))
+		{
+			$this->db->like('npwp', $this->input->post('npwp'));
 		}
 		
 		$this->db->from($this->tablevendors);
@@ -94,14 +98,10 @@ class Vendors_model extends CI_Model{
 
     function get_new_id_ven(){
         
-        $query = $this->db->query("SELECT max(id) as maxKode FROM vendors");
+        $query = "SELECT id as maxKode FROM vendors ORDER BY id DESC LIMIT 1";
 
-        if($query->num_rows() > 0){
-            foreach($query->result() as $data){
-                $result[] = $data;
-            }
-            return $result;
-        }
+		return $this->db->query($query)->row()->maxKode;
+		echo json_encode($query);
                             
     }
     public function get_by_id($id_vendors)
@@ -136,6 +136,12 @@ class Vendors_model extends CI_Model{
     }
     function import($data){
 		$insert = $this->db->insert_batch('vendors', $data);
+		if($insert){
+			return true;
+		}
+	}
+	function import_user($data){
+		$insert = $this->db->insert_batch('tbl_user', $data);
 		if($insert){
 			return true;
 		}

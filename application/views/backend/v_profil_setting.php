@@ -50,9 +50,9 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <label for="invalid-state">Email</label>
-                                <input type="email" class="form-control user_email" name="user_email" 
-                                    placeholder="Email">
+                                <label for="invalid-state">Email /NPWP</label>
+                                <input type="text" class="form-control user_email" name="user_email" 
+                                    placeholder="Email /NPWP">
                                 <br/>
                                 <div class="form-group has-icon-left">
                                     <div class="position-relative">
@@ -200,12 +200,6 @@ $this->security->get_csrf_hash(); ?>');
                                 icon: "warning",
                                 title: "Alert",
                                 text: 'Form tidak boleh kosong'
-                            })
-            } else if (!user_email.match(validEmailRegex)) {
-                            Swal.fire({
-                                icon: "warning",
-                                title: "Alert",
-                                text: 'Email harus format : abc@gmail.com'
                             })
             } else if (password != conf_pass) {
                             Swal.fire({

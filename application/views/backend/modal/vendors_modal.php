@@ -30,6 +30,13 @@
                                     <span class="help-block text-danger"></span>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="valid-state">NPWP</label>
+                                    <input type="text" name="npwp" class="form-control npwp" id="npwp" placeholder="NPWP Vendor">
+                                    <span class="help-block text-danger"></span>
+                                </div>
+                            </div>
                         </div>
                         </div>
                     <?php
@@ -72,7 +79,8 @@
                                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Aturan</button>
                                                         <div class="collapse" id="collapseExample">
                                                         1. Format dalam bentuk (xls,xlsx).<br/>
-                                                        2. Nama Wajib Isi.<br/>
+                                                        2. NPWP Wajib Isi.<br/>
+                                                        3. Nama Wajib Isi.<br/>
                                                         </div>
                                                         <br/><br/>
                                                     <div class="col-12">

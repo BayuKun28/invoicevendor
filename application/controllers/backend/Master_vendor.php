@@ -42,6 +42,7 @@ class Master_vendor extends CI_Controller{
 			$row = array();
 			$row[] = $no;
 			$row[] = $d->id;
+			$row[] = $d->npwp;
 			$row[] = $d->nama;
 				$row[] = '<div class="btn-group mb-1"><div class="dropdown"><button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton7" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opsi</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton7">
 				<a class="dropdown-item" href="javascript:void()" title="Edit" onclick="edit_vendor('."'".$d->id."'".')"><i class="bi bi-pen-fill"></i> Edit</a><a class="dropdown-item" href="javascript:void()" title="Hapus" id="deletevendor" value="'.$d->id.'"><i class="bi bi-trash"></i> Hapus</a></div></div></div>';
@@ -77,9 +78,21 @@ class Master_vendor extends CI_Controller{
 		$users = $this->session->userdata('id');
 		$nama_users = $this->session->userdata('name');
 				$data = array(
-					'nama' => $this->input->post('nama')
+					'nama' => $this->input->post('nama'),
+					'npwp' => $this->input->post('npwp')
 				);
 				$insert = $this->vendors_model->insert_vendor($data);
+
+				$get_new_id = $this->vendors_model->get_new_id_ven();
+				$temp_user[] = array(
+					'vendor' => $get_new_id,
+					'user_name'	=> $this->input->post('nama'),
+					'user_email' => $this->input->post('npwp'),
+					'user_password' => MD5(12345678),
+					'user_level' => 2,
+					'user_photo' => 'user_blank.webp'
+				); 
+				$insert_user = $this->vendors_model->import_user($temp_user);
 				
 				if($insert){
 					// INSERT LOG
@@ -106,6 +119,7 @@ class Master_vendor extends CI_Controller{
 		$this->_validate_edit();
 					$users = $this->session->userdata('id');
 					$ajax_data['nama'] = $this->input->post('nama');
+					$ajax_data['npwp'] = $this->input->post('npwp');
 
 					if ($this->vendors_model->update_entry($id, $ajax_data)) {
 						// INSERT LOG
@@ -161,6 +175,12 @@ class Master_vendor extends CI_Controller{
 			$data['error_string'][] = 'Form Nama harus berisi';
 			$data['status'] = FALSE;
 		}
+		if($this->input->post('npwp') == '')
+		{
+			$data['inputerror'][] = 'npwp';
+			$data['error_string'][] = 'Form NPWP harus berisi';
+			$data['status'] = FALSE;
+		}
 
 		$namalength= strlen($nama);
 		if($namalength < 3)
@@ -194,6 +214,12 @@ class Master_vendor extends CI_Controller{
 		{
 			$data['inputerror'][] = 'nama';
 			$data['error_string'][] = 'Form Nama harus berisi';
+			$data['status'] = FALSE;
+		}
+		if($this->input->post('npwp') == '')
+		{
+			$data['inputerror'][] = 'npwp';
+			$data['error_string'][] = 'Form NPWP harus berisi';
 			$data['status'] = FALSE;
 		}
 
@@ -234,40 +260,41 @@ class Master_vendor extends CI_Controller{
 					if (isset($_FILES["fileExcel"]["name"])) {
 						$path = $_FILES["fileExcel"]["tmp_name"];
 						$object = PHPExcel_IOFactory::load($path);
-							
 						foreach($object->getWorksheetIterator() as $worksheet)
 						{
-							// GET NEW ID
-							$get_new_id = $this->vendors_model->get_new_id_ven();
-					        foreach($get_new_id as $result){
-					            $kode_New_id =  $result->maxKode;
-					        }
-					        $noUrut = (int) substr($kode_New_id, 4, 12);
-					        $noUrut++;
-					        $char = "CST-";
-					        $NewID = $char.str_pad($noUrut, 12, '0', STR_PAD_LEFT);
-							// GET NEW ID
 							$highestRow = $worksheet->getHighestRow();
 							$highestColumn = $worksheet->getHighestColumn();	
+							$get_new_id = $this->vendors_model->get_new_id_ven();
 							for($row=2; $row<=$highestRow; $row++)
 							{
-								
-								
-								$nama = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+								$get_new_id++;
+								$npwp = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+								$nama = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
 								
 								$user_level = 1;
 								
 								$id_users = $this->session->userdata('id');
 								$temp_data[] = array(
-									'id'	=> $NewID++,
+									'id'	=> $get_new_id,
+									'npwp'	=> $npwp,
 									'nama'	=> $nama
+								); 
+
+								$temp_user[] = array(
+									'vendor' => $get_new_id,
+									'user_name'	=> $nama,
+									'user_email' => $npwp,
+									'user_password' => MD5(12345678),
+									'user_level' => 2,
+									'user_photo' => 'user_blank.webp'
 								); 
 									
 							}
 						}
 							$this->load->model('backend/Vendors_model');
 							$insert = $this->vendors_model->import($temp_data);
-						if($insert){
+							$insert_user = $this->vendors_model->import_user($temp_user);
+						if($insert && $insert_user){
 							echo $this->session->set_flashdata('msg','success-import');
 							redirect('backend/Master_vendor');
 						}else{
